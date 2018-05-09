@@ -135,3 +135,9 @@ export const updateCommentScore = (comment, option) => {
     return fetch(`${api}/comments/${comment.id}`, params)
         .then(res =>  res.json())
 }
+
+export const fetchPostById = (id) => {
+    return  fetch(`${api}/posts/${id}`, { headers })
+        .then(res => res.json())
+        .catch(data => {})
+}

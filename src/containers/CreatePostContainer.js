@@ -6,13 +6,14 @@ import AddPostForm from "../components/AddPostForm";
 const mapStateToProps = (state, ownProps) => {
     return {
         ...state,
+        fetchUpdatePost: ownProps.fetchUpdatePost
     }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchCreatePost: (data) => dispatch(fetchCreatePost(data)),
-        fetchUpdatePost: (data) => dispatch(fetchUpdatePost(data)),
+        //fetchUpdatePost: (data) => dispatch(fetchUpdatePost(data)),
     }
 }
 

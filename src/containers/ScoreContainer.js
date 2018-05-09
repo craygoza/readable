@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import React from 'react'
-import { fetchUpdateScore, fetchUpdateCommentScore } from '../actions'
+import { fetchUpdateScore, fetchUpdateScoreDetail } from '../actions'
+import { fetchUpdateCommentScore } from '../actions/commentActions'
 import Score from "../components/Score";
 
 const mapStateToProps = (state, ownProps) => {
@@ -12,7 +13,8 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         fetchUpdateScore: (post, option) => dispatch(fetchUpdateScore(post, option)),
-        fetchUpdateCommentScore: (comment, option) => dispatch(fetchUpdateCommentScore(comment, option))
+        fetchUpdateCommentScore: (comment, option) => dispatch(fetchUpdateCommentScore(comment, option)),
+        fetchUpdateScoreDetail: (post, option) => dispatch(fetchUpdateScoreDetail(post, option)),
     }
 }
 

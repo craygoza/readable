@@ -2,10 +2,43 @@ import React, { Component } from 'react'
 import Post from "./Post";
 import { Grid, Row, Col } from "react-bootstrap";
 import CreatePostContainer from "../containers/CreatePostContainer";
+import CategoriesList from "../containers/CategoriesList";
 
 class PostList extends Component {
-    componentDidMount(){
-        this.props.fetchPosts();
+
+    constructor(props) {
+        super(props);
+
+        this.handleShow = this.handleShow.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+
+        this.state = {
+            show: false
+        };
+    }
+
+   componentDidMount(){
+        const { category } = this.props
+
+        this.handlePosts(category)
+    }
+
+    componentWillReceiveProps(nextProps){
+
+        console.log(nextProps, this.props)
+
+        if (nextProps.category != this.props.category){
+            this.handlePosts(nextProps.category)
+        }
+    }
+
+    handlePosts = category => {
+        if (category && category != 'all') {
+            this.props.fetchPostsByCategory(category)
+        }
+        else {
+            this.props.fetchPosts();
+        }
     }
 
     handleClick = e => {
@@ -21,23 +54,17 @@ class PostList extends Component {
         }
     }
 
-    constructor(props) {
-        super(props);
-
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
-
-        this.state = {
-            show: false
-        };
-    }
-
     handleClose() {
         this.setState({ show: false });
     }
 
     handleShow() {
         this.setState({ show: !this.state.show });
+    }
+
+    redirect404 = () => {
+        this.props.history.push("/404")
+        return null
     }
 
     render(){
@@ -64,8 +91,10 @@ class PostList extends Component {
                         </Col>
                     </Row>
                     <Row className="show-grid">
-
-                        <Col xs={10} md={12}>
+                        <Col xs={10} md={4}>
+                            <CategoriesList />
+                        </Col>
+                        <Col xs={10} md={8}>
                             <ol>
                             {postReducer.posts && postReducer.posts.map(post => (
                                 <Post key={post.id}
@@ -73,6 +102,7 @@ class PostList extends Component {
                                       comments={postReducer.comments}
                                       onRemove={this.props.fetchRemovePost}
                                       onCommentsRequest={this.props.fetchCommentsByPost}
+                                      fetchUpdatePost={this.props.fetchUpdatePost}
                                      />
                             ))}
                             </ol>

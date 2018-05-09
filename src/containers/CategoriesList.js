@@ -1,13 +1,14 @@
 import { connect } from 'react-redux'
-import { setCategoryFilter, fetchPostsByCategory } from "../actions";
+import { fetchCategories } from "../actions/categoryActions";
+import { fetchPostsByCategory } from '../actions'
 import Categories from '../components/Categories'
-import { fetchCategories } from "../actions";
 import React, { Component } from 'react'
+import {withRouter} from "react-router-dom";
 
 const mapStateToProps = (state, ownProps) => {
     return {
         ...state,
-        active: ownProps.filter === state.categoryFilter
+        ownProps
     }
 }
 
@@ -18,6 +19,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     }
 }
 
-let CategoriesList = connect(mapStateToProps, mapDispatchToProps)(Categories)
+let CategoriesList = withRouter(connect(mapStateToProps, mapDispatchToProps)(Categories))
 
 export default CategoriesList

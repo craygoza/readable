@@ -6,8 +6,7 @@ class AddCommentForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+        this.toggleShow = this.toggleShow.bind(this);
         this.handleCreateComment = this.handleCreateComment.bind(this);
 
         this.state = {
@@ -15,30 +14,28 @@ class AddCommentForm extends React.Component {
         };
     }
 
-    handleClose() {
-        this.setState({ show: false });
-    }
-
-    handleShow() {
-        this.setState({ show: true });
+    toggleShow() {
+        this.setState({ show: !this.state.show }) // open if close and vice-versa
     }
 
     handleCreateComment() {
 
-        let timestamp = Date.now();
         const { postData, editComment, message } = this.props;
+
+        const uuidv1 = require('uuid/v1');
+
         if (!editComment) {
-            let newComment = {
-                id: new Date().toISOString(),
+            const newComment = {
+                id: uuidv1(),
                 parentId: this.props.postData.id,
                 body: this.body.value,
                 author: this.author.value,
-                timestamp: timestamp
+                timestamp: Date.now()
             }
             this.props.onCreateComment(newComment);
         }
         else {
-            let newEditComment = {
+            const newEditComment = {
                 id: editComment.id,
                 parentId: editComment.parentId,
                 body: this.body.value,
@@ -48,6 +45,7 @@ class AddCommentForm extends React.Component {
             this.props.onUpdateComment(newEditComment);
         }
 
+        this.toggleShow()
     }
 
     render() {
@@ -56,7 +54,7 @@ class AddCommentForm extends React.Component {
 
         return (
             <div>
-                <Button bsStyle="primary" bsSize="small" onClick={this.handleShow}>
+                <Button bsStyle="primary" bsSize="small" onClick={this.toggleShow}>
                     {message}
                 </Button>
 
@@ -88,7 +86,7 @@ class AddCommentForm extends React.Component {
 
                         <Button onClick={this.handleCreateComment} bsStyle="primary">Save</Button>
 
-                        <Button onClick={this.handleClose}>Close</Button>
+                        <Button onClick={this.toggleShow}>Close</Button>
                     </form>
 
                 </Modal>

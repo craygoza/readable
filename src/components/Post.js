@@ -1,23 +1,17 @@
 import React, { Component } from 'react'
 import {Grid, Row, Col, Button, ButtonToolbar} from "react-bootstrap";
-import CommentList from "./CommentList";
 import CreatePostContainer from "../containers/CreatePostContainer";
 import ScoreContainer from "../containers/ScoreContainer";
+import {Link} from "react-router-dom";
 
 class Post extends Component {
-
-    componentDidMount() {
-        this.props.onCommentsRequest(this.props.postData);
-    }
 
     removePost = post => {
         this.props.onRemove(this.props.postData)
     }
 
     render() {
-
         const {postData} = this.props;
-        console.log('comments =>', this.props.comments.get(postData.id) )
         return (
             <li className="list-group-item">
                 <Grid>
@@ -30,11 +24,6 @@ class Post extends Component {
                             <p>
                                 <b>Category:</b> {postData.category}
                             </p>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={6} md={12}>
-                            <CommentList postData={postData} comments={this.props.comments.get(postData.id)}  fetchRemoveComment={this.props.fetchRemoveComment} />
                         </Col>
                     </Row>
                     <Row>
@@ -54,23 +43,6 @@ class Post extends Component {
 
                     </Row>
                     <Row>
-                        <Col xs={6} md={2}>
-
-                        </Col>
-
-                        <Col xs={6} md={3}>
-
-                        </Col>
-                        <Col xs={6} md={3}>
-
-                        </Col>
-                        <Col xs={6} md={4}>
-
-                        </Col>
-
-                    </Row>
-                    <Row/>
-                    <Row>
                         <Col xs={10} md={4}>
                             <ScoreContainer votetype="POST" postData={postData} />
                         </Col>
@@ -78,8 +50,9 @@ class Post extends Component {
                         </Col>
                         <Col xs={10} md={4}>
                             <ButtonToolbar>
-                                <CreatePostContainer message="Edit" postData={postData} />
+                                <CreatePostContainer message="Edit" postData={postData} fetchUpdatePost={this.props.fetchUpdatePost} />
                                 <Button bsSize="small" bsStyle="danger" onClick={this.removePost}>Delete</Button>
+                                <Link to={'/' + postData.category + '/' + postData.id} className="btn btn-success" > Post Details </Link>
                             </ButtonToolbar>
                         </Col>
                     </Row>

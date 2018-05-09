@@ -6,8 +6,7 @@ class AddPostForm extends React.Component {
     constructor(props, context) {
         super(props, context);
 
-        this.handleShow = this.handleShow.bind(this);
-        this.handleClose = this.handleClose.bind(this);
+        this.toggleShow = this.toggleShow.bind(this);
         this.handleCreatePost = this.handleCreatePost.bind(this);
 
         this.state = {
@@ -15,24 +14,21 @@ class AddPostForm extends React.Component {
         };
     }
 
-    handleClose() {
-        this.setState({ show: false });
-    }
-
-    handleShow() {
-        this.setState({ show: true });
+    toggleShow() {
+        this.setState({ show: !this.state.show }) // open if close and vice-versa
     }
 
     handleCreatePost() {
 
-        let timestamp = Date.now();
         const { postData, message } = this.props;
+
+        const uuidv1 = require('uuid/v1');
 
         if (!postData) {
 
             let newPost = {
-                id: new Date().toISOString(),
-                timestamp: timestamp,
+                id: uuidv1(),
+                timestamp: Date.now(),
                 title: this.title.value,
                 body: this.body.value,
                 author: this.author.value,
@@ -49,6 +45,8 @@ class AddPostForm extends React.Component {
             }
            this.props.fetchUpdatePost(newEditPost);
         }
+
+        this.toggleShow()
     }
 
     render() {
@@ -56,7 +54,7 @@ class AddPostForm extends React.Component {
 
         return (
             <div>
-                <Button bsStyle="primary" bsSize="small" onClick={this.handleShow}>
+                <Button bsStyle="primary" bsSize="small" onClick={this.toggleShow}>
                     {message}
                 </Button>
 
@@ -111,7 +109,7 @@ class AddPostForm extends React.Component {
                         </FormGroup>{' '}
 
                             <button onClick={this.handleCreatePost} >Save</button>
-                            <button onClick={this.handleClose} >Close</button>
+                            <button onClick={this.toggleShow} >Close</button>
 
                     </Form>
                 </Modal>
