@@ -1,7 +1,7 @@
 import * as ReadableAPI from "../util/ReadableAPI";
 import { requestComments, receiveComments} from "./commentActions";
 import { RECEIVE_POSTS, REQUEST_POSTS, CREATE_POST, UPDATE_POST, REMOVE_POST, SORT_POST_BY_SCORE, RECEIVE_POST, UPDATE_POST_SCORE_DETAIL, UPDATE_POST_DETAIL,
-    SORT_POST_BY_DATE, UPDATE_POST_SCORE, REMOVE_POST_DETAIL } from "../actions/actionTypes";
+    SORT_POST_BY_DATE, UPDATE_POST_SCORE, REMOVE_POST_DETAIL, INCREMENT_POST_COMMENT_COUNT, DECREMENT_POST_COMMENT_COUNT} from "../actions/actionTypes";
 
 export const receivePosts = posts => ({
     type: RECEIVE_POSTS,
@@ -25,6 +25,16 @@ export const updatePost = post => ({
 
 export const updatePostDetail = post => ({
     type: UPDATE_POST_DETAIL,
+    post
+});
+
+export const incrementPostCommentCount = post => ({
+    type: INCREMENT_POST_COMMENT_COUNT,
+    post
+});
+
+export const decrementPostCommentCount = post => ({
+    type: DECREMENT_POST_COMMENT_COUNT,
     post
 });
 

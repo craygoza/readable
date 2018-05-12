@@ -1,7 +1,7 @@
-import { connect } from 'react-redux'
-import {fetchPosts, fetchPostsByCategory, fetchCommentsByPost, sortPostByScore, fetchRemovePostDetail, sortPostByDate, fetchPostById, fetchUpdatePostDetail} from "../actions";
 import React from 'react'
+import * as actions from "../actions";
 import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 import PostDetail from "../components/PostDetail";
 
 const mapStateToProps = (state, ownProps) => {
@@ -13,16 +13,5 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        fetchPosts: () => dispatch(fetchPosts()),
-        fetchRemovePostDetail: (data) => dispatch(fetchRemovePostDetail(data)),
-        fetchCommentsByPost: (data) => dispatch(fetchCommentsByPost(data)),
-        fetchPostById:(data) => dispatch(fetchPostById(data)),
-        fetchUpdatePostDetail:(data) => dispatch(fetchUpdatePostDetail(data))
-    }
-}
-
-let PostDetailContainer = withRouter(connect(mapStateToProps, mapDispatchToProps)(PostDetail))
-
+let PostDetailContainer = withRouter(connect(mapStateToProps, actions)(PostDetail))
 export default PostDetailContainer

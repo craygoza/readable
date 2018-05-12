@@ -4,9 +4,11 @@ import { fetchUpdateScore, fetchUpdateScoreDetail } from '../actions'
 import { fetchUpdateCommentScore } from '../actions/commentActions'
 import Score from "../components/Score";
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state, {commentData, postData, votetype}) => {
     return {
-        ...state
+        commentData,
+        postData,
+        votetype
     }
 }
 

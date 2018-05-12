@@ -12,7 +12,7 @@ class Comment extends Component {
 
     removeComment = comment => {
         const { commentData } = this.props;
-        this.props.onRemoveComment(commentData.id)
+        this.props.onRemoveComment(commentData.id).then(value => this.props.decrementPostCommentCount(this.props.postData))
     }
 
     render() {

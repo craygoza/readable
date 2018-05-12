@@ -9,7 +9,13 @@ class PostDetail extends Component {
 
     componentDidMount() {
         this.props.fetchPostById(this.props.post_id).then(post => {
-                return this.props.fetchCommentsByPost(this.props.postReducer.postData)
+                const { postData } = post
+
+                if (!postData.id){
+                    this.redirect404()
+                }
+
+                return this.props.fetchCommentsByPost(postData)
             }
         )
     }
@@ -25,11 +31,12 @@ class PostDetail extends Component {
 
     render() {
 
-        const { postData, comments } = this.props.postReducer;
+        const { postData } = this.props.postReducer;
+        const { comments } = this.props.commentsReducer;
 
-        if ((postData && (postData.deleted || postData.error || !this.props.post_id))){
+       if (postData && postData.deleted === true){
             this.redirect404()
-        }
+       }
 
         return (
             (postData ?
@@ -47,7 +54,7 @@ class PostDetail extends Component {
                     </Row>
                     <Row>
                         <Col xs={6} md={8}>
-                            <CommentList postData={postData} comments={comments.get(postData.id)}  fetchRemoveComment={this.props.fetchRemoveComment} />
+                            <CommentList postData={postData} comments={comments.get(postData.id)}  fetchRemoveComment={this.props.fetchRemoveComment}  />
                         </Col>
                     </Row>
                     <Row>

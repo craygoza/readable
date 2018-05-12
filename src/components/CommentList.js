@@ -5,7 +5,7 @@ import AddCommentForm from "./AddCommentForm";
 import {
     fetchRemoveComment, fetchCreateComment, fetchUpdateComment
 } from "../actions/commentActions";
-import { fetchCommentsByPost } from '../actions'
+import { fetchCommentsByPost, incrementPostCommentCount, decrementPostCommentCount } from '../actions'
 
 import {connect} from "react-redux";
 
@@ -23,8 +23,8 @@ class CommentList extends Component {
                             <ol>
                                 <li className="list-group-item">
                                     {comments && comments.map(comment => (
-                                        <Comment key={comment.id} commentData={comment}
-                                                 onRemoveComment={this.props.fetchRemoveComment}
+                                        <Comment key={comment.id} commentData={comment} postData={postData}
+                                                 onRemoveComment={this.props.fetchRemoveComment} decrementPostCommentCount={this.props.decrementPostCommentCount}
                                                  onUpdateComment={this.props.fetchUpdateComment}/>
                                     ))}
                                 </li>
@@ -43,7 +43,7 @@ class CommentList extends Component {
                         <Col xs={10} md={3}/>
                         <Col xs={10} md={3}>
                             <AddCommentForm message="Add Comment" postData={postData}
-                                            onCreateComment={this.props.fetchCreateComment}/>
+                                            onCreateComment={this.props.fetchCreateComment} incrementPostCommentCount={this.props.incrementPostCommentCount} />
                         </Col>
                     </Row>
                 </Grid>
@@ -55,6 +55,7 @@ class CommentList extends Component {
 const mapStateToProps = (state, ownProps) => {
     return {
         ...state,
+        ownProps
     }
 }
 
@@ -64,6 +65,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         fetchRemoveComment: (data) => dispatch(fetchRemoveComment(data)),
         fetchCreateComment: (data) => dispatch(fetchCreateComment(data)),
         fetchUpdateComment: (data) => dispatch(fetchUpdateComment(data)),
+        incrementPostCommentCount: (data) => dispatch(incrementPostCommentCount(data)),
+        decrementPostCommentCount: (data) => dispatch(decrementPostCommentCount(data))
     }
 }
 

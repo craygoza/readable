@@ -32,7 +32,8 @@ class AddCommentForm extends React.Component {
                 author: this.author.value,
                 timestamp: Date.now()
             }
-            this.props.onCreateComment(newComment);
+            this.props.onCreateComment(newComment)
+                .then(val => this.props.incrementPostCommentCount(postData))
         }
         else {
             const newEditComment = {

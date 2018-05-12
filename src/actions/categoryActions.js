@@ -1,13 +1,6 @@
 import {RECEIVE_CATEGORIES, REQUEST_CATEGORIES, SET_CATEGORY_FILTER} from "./actionTypes";
 import * as ReadableAPI from "../util/ReadableAPI";
 
-export function setCategoryFilter( filter ){
-    return {
-        type: SET_CATEGORY_FILTER,
-        filter
-    }
-}
-
 export const receiveCategories = categories => ({
     type: RECEIVE_CATEGORIES,
     categories
